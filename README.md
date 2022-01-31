@@ -1,1 +1,1 @@
-#Работа с методологией CRUD
+#Trying to figure out how to work with CRUD
