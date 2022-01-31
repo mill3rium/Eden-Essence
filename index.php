@@ -15,7 +15,6 @@ require_once "config/connect.php";
     <title>EDEN ESSENCE</title>
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/header.css" />
     <link rel="stylesheet" href="/fonts/icons/fontawesome-free-5.15.4-web/css/all.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,7 +60,7 @@ require_once "config/connect.php";
         </div>
         <ul class="sidenav__menu">
             <li class="sidenav__menu-item">
-                <a href="catalog.php" class="sidenav__menu-link">Все</a>
+                <a href="../pages/catalog.php" class="sidenav__menu-link">Все</a>
             </li>
             <li class="sidenav__menu-item">
                 <a href="#0" class="sidenav__menu-link">Новинки</a>
@@ -130,36 +129,35 @@ require_once "config/connect.php";
                     Для вас
                 </div>
                 <div class="owl-carousel owl-theme for-you__slider" id="slider">
-                    <div class="for-you__slider-item item">
-                        <img src="/img/pics/1.png" alt="pic" class="for-you__slider-img">
-                        <div class="for-you__slider-title">
-                            Phillip Plein
+
+                    <?php 
+
+                    $products = mysqli_query($connect, "SELECT * FROM `products`");
+                    $products = mysqli_fetch_all($products);
+                    $i = 1;
+                    foreach ($products as $product) {
+                        if($i > 7){
+                            $i = 0;
+                        }
+                        else{
+
+                        ?>
+
+                        <div class="for-you__slider-item item">
+                            <img src="/img/pics/<?= $i?>.png" alt="pic" class="for-you__slider-img">
+                            <div class="for-you__slider-title">
+                                <?= $product[1] ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="for-you__slider-item item">
-                        <img src="/img/pics/7.png" alt="pic" class="for-you__slider-img">
-                        <div class="for-you__slider-title">
-                            Chanel
-                        </div>
-                    </div>
-                    <div class="for-you__slider-item item">
-                        <img src="/img/pics/4.png" alt="pic" class="for-you__slider-img">
-                        <div class="for-you__slider-title">
-                            KENZO
-                        </div>
-                    </div>
-                    <div class="for-you__slider-item item">
-                        <img src="/img/pics/6.png" alt="pic" class="for-you__slider-img">
-                        <div class="for-you__slider-title">
-                            Chanel
-                        </div>
-                    </div>
-                    <div class="for-you__slider-item item">
-                        <img src="/img/pics/11.png" alt="pic" class="for-you__slider-img">
-                        <div class="for-you__slider-title">
-                            Armani
-                        </div>
-                    </div>
+
+
+                        <?php
+                    }
+                        $i++;
+                    }
+
+                     ?>
+
                 </div>
             </section>
             <!-- CATEGORY -->
@@ -325,14 +323,14 @@ require_once "config/connect.php";
 
                         </ul>
                     </div>
-                </div>
+                </div>  
                 <div class="footer__subfooter">
-                    <div class="footer__subfooter-subscribe">
-                        <input type="email" name="footer-email" class="footer__subfooter-subscribe-input" placeholder="Подписаться">
-                        <button class="footer__subfooter-subscribe-btn">
+                    <form action="vendor/email.php" method="post" class="footer__subfooter-subscribe">
+                        <input type="email" name="footer_email" class="footer__subfooter-subscribe-input" placeholder="Подписаться" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <button type="submit" class="footer__subfooter-subscribe-btn">
                             <i class="fas fa-share"></i>
                         </button>
-                    </div>
+                    </form>
                     <div class="footer__subfooter-icons">
                         <i class="footer__subfooter-icons-icon fab fa-instagram"></i>
                         <i class="footer__subfooter-icons-icon fab fa-twitter"></i>
@@ -394,6 +392,7 @@ require_once "config/connect.php";
     <script type="text/javascript" src="/js/header.js"></script>
     <script type="text/javascript" src="/js/login.js"></script>
     <script type="text/javascript" src="/js/scroll.js"></script>
+    <script type="text/javascript" src="/js/scroll-to-up.js"></script>
 </body>
 
 </html>

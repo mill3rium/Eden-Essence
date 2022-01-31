@@ -1,7 +1,7 @@
 <?php
 
 
-require_once "config/connect.php";
+require_once "../config/connect.php";
 
 
 ?>
@@ -13,10 +13,11 @@ require_once "config/connect.php";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Каталог</title>
-    <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/catalog.css"/>
-    <link rel="stylesheet" href="/fonts/icons/fontawesome-free-5.15.4-web/css/all.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/catalog.css"/>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../fonts/icons/fontawesome-free-5.15.4-web/css/all.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -28,30 +29,9 @@ require_once "config/connect.php";
 
 <body>
     <!-- HEADER -->
-    <header class="header" >
-        <div class="wrapper">
-            <div class="header__wrapper">
-                <div class="header__burger">
-                    <div class="header__burger-menu" >
-                        <span class="header__burger-menu-line-1"></span>
-                        <span class="header__burger-menu-line-2"></span>
-                        <span class="header__burger-menu-line-3"></span>
-                    </div>
-                </div>
-                <div class="header__logo">
-                    <a href="/">
-                        <img src="/img/logo/logo-black.svg" alt="logo" class="header__logo-img" />
-                    </a>
-                </div>
-                <div class="header__search">
-                    <input type="text" class="header__search-input">
-                    <button class="header__search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php 
+    include_once "../elements/header.html";
+    ?>
     <!-- SIDEBAR -->
     <nav id="mySidenav" class="sidenav">
         <div class="sidenav__close-btn">
@@ -108,16 +88,53 @@ require_once "config/connect.php";
     <main class="main" id="top">
        <div class="wrapper">
            <section class="section__catalog">
-                <h1>Каталог</h1>
+                <h1 class="section__catalog-title">Каталог</h1>
                 <div class="catalog__flex-container">
-                    
+
+                    <?php 
+
+                    $products = mysqli_query($connect, "SELECT * FROM `products`");
+                    $products = mysqli_fetch_all($products);
+                    $i = 1;
+                    foreach ($products as $product) {
+                        if($i > 7){
+                            $i = 0;
+                        }
+                        else{
+
+                        ?>
+
+                        <div class="catalog__flex-card">
+                            <div class="catalog__flex-card-img-block">
+                                <img src="../img/pics/<?= $i?>.png" alt="product" class="catalog__flex-card-img">
+                            </div>
+                            <h3 class="catalog__flex-card-title">
+                                <?= $product[1] ?>
+                            </h3>
+                            <div class="catalog__flex-card-price">
+                                <?= $product[2] ?>
+                            </div>
+                            <div class="catalog__flex-card-button-block">
+                                <button class="catalog__flex-card-button">
+                                    В корзину
+                                </button>
+                            </div>
+                        </div>
+
+                        <?php
+                        }
+                    $i++;
+                    }
+                     ?>
+
+                </div>
+                <div class="catalog__more-button">
+                    <button>Еще</button>
                 </div>
            </section>
           
        </div>
     </main>
-    <!-- FOOTER -->
-
 
     <!-- lOGIN & REGISTER POP-UPS -->
     <div class="overlay__pop-up"></div>
@@ -160,6 +177,8 @@ require_once "config/connect.php";
     <script type="text/javascript" src="/js/sidebar.js"></script>
     <script type="text/javascript" src="/js/login.js"></script>
     <script type="text/javascript" src="/js/scroll.js"></script>
+    <script type="text/javascript" src="/js/scroll-to-up.js"></script>
+
 </body>
 
 </html>

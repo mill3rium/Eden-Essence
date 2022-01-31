@@ -19,12 +19,8 @@ window.onscroll = function() {
             $(".header__burger-menu-line-2").css({ "background-color": "white" }),
             $(".header__burger-menu-line-3").css({ "background-color": "white" }),
             $(".header__search-button").css({ "color": "white" }),
-            $(".header__search-input").css({ "border-bottom": "1px solid #fff", "color": "#fff" }),
-            $(".scroll-to-up").css({"display":"none"});
+            $(".header__search-input").css({ "border-bottom": "1px solid #fff", "color": "#fff" })
 
     }
-    if(scrolled > 400)
-    {
-      $(".scroll-to-up").css({"display":"block"});
-    }
+
 }
